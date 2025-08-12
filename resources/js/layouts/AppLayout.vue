@@ -1,98 +1,48 @@
-<script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
-
-const form = useForm({
-  email: '',
-  password: '',
-});
-
-const submit = () => {
-  form.post(route('login'), {
-    onFinish: () => form.reset('password'),
-  });
-};
+<script setup>
+import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-  
-  <div class="bg-light min-vh-100 d-flex align-items-center justify-content-center">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
+  <div class="min-h-screen bg-gray-100 font-sans antialiased text-gray-900">
 
-          <div class="card shadow-lg border-0 rounded-4">
-            <div class="card-body p-5">
-
-              <!-- Heading -->
-              <div class="text-center mb-4">
-                <h2 class="fw-bold text-primary">Log in to your account</h2>
-                <p class="text-muted small">Welcome back! Please enter your credentials</p>
-              </div>
-
-              <!-- Login Form -->
-              <form @submit.prevent="submit" novalidate>
-                
-                <!-- Email -->
-                <div class="mb-4">
-                  <label for="email" class="form-label fw-semibold">Email address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    class="form-control form-control-lg"
-                    v-model="form.email"
-                    required
-                    placeholder="name@example.com"
-                    :class="{ 'is-invalid': form.errors.email }"
-                    autocomplete="email"
-                    autofocus
-                  />
-                  <div class="invalid-feedback">{{ form.errors.email }}</div>
-                </div>
-
-                <!-- Password -->
-                <div class="mb-4">
-                  <label for="password" class="form-label fw-semibold">Password</label>
-                  <input
-                    type="password"
-                    id="password"
-                    class="form-control form-control-lg"
-                    v-model="form.password"
-                    required
-                    placeholder="Enter your password"
-                    :class="{ 'is-invalid': form.errors.password }"
-                    autocomplete="current-password"
-                  />
-                  <div class="invalid-feedback">{{ form.errors.password }}</div>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="d-grid">
-                  <button
-                    type="submit"
-                    class="btn btn-primary btn-lg shadow-sm"
-                    :disabled="form.processing"
-                  >
-                    <span
-                      v-if="form.processing"
-                      class="spinner-border spinner-border-sm me-2"
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                    Log in
-                  </button>
-                </div>
-              </form>
-
-            </div>
+    <!-- Primary Navigation Header -->
+    <header class="bg-white shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          
+          <!-- Logo -->
+          <div class="flex-shrink-0 flex items-center">
+            <Link :href="route('home')" class="font-bold text-2xl text-blue-600">
+              GBV
+            </Link>
           </div>
 
-          <!-- Footer -->
-          <div class="text-center mt-3 text-muted">
-            &copy; {{ new Date().getFullYear() }} GBV
-          </div>
+          <!-- Navigation Links -->
+          <nav class="hidden sm:flex space-x-8">
+            <!-- <Link :href="route('welcome')" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md font-medium transition duration-150 ease-in-out">
+              Home
+            </Link> -->
+            <!-- <Link :href="route('report.create')" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md font-medium transition duration-150 ease-in-out">
+              Anonymous Report
+            </Link> -->
+            <Link :href="route('login')" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md font-medium transition duration-150 ease-in-out">
+              Login
+            </Link>
+          </nav>
 
         </div>
       </div>
-    </div>
+    </header>
+
+    <!-- Main Content Slot -->
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-200 text-center py-4 mt-6">
+      <p class="text-gray-600 text-sm">&copy; {{ new Date().getFullYear() }} GBV</p>
+    </footer>
+
   </div>
 </template>

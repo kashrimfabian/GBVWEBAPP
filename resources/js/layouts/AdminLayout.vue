@@ -1,5 +1,7 @@
 <script setup>
-import { router } from '@inertiajs/vue3';
+import { router, Link, usePage } from '@inertiajs/vue3';
+
+const page = usePage();
 
 function logout() {
   router.post(route('logout'));
@@ -8,7 +10,6 @@ function logout() {
 
 <template>
   <div class="wrapper">
-
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left -->
@@ -37,55 +38,61 @@ function logout() {
 
     <!-- Sidebar -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <a href="/" class="brand-link">
+      <Link href="/" class="brand-link">
         <img src="/logo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8" />
         <span class="brand-text font-weight-light">GBV</span>
-      </a>
+      </Link>
 
       <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="icon text-white mr-2">
-             <i class="fas fa-user-circle fa-2x"></i>
+            <i class="fas fa-user-circle fa-2x"></i>
           </div>
           <div class="info">
-            <a href="#" class="d-block">
-             {{ $page.props.auth.user.name }}
-            </a>
+            <span class="d-block">
+              {{ page.props.auth?.user?.name || 'Guest' }}
+            </span>
           </div>
         </div>
-
 
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
             <li class="nav-item">
-              <a href="/dashboard" class="nav-link">
+              <Link href="/dashboard" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>Dashboard</p>
-              </a>
+              </Link>
             </li>
             <li class="nav-item">
-              <a href="/roles" class="nav-link">
+              <Link href="/roles" class="nav-link">
                 <i class="nav-icon fas fa-user-shield"></i>
                 <p>Roles</p>
-              </a>
+              </Link>
             </li>
-            <!-- v-if="$page.props.auth.user.role.name === 'admin'" -->
-            <li  class="nav-item">
-              <a href="/users" class="nav-link">
-               <i class="nav-icon fas fa-users"></i>
-                <p>Users</p>
-              </a>
-            </li>
-
             <li class="nav-item">
-              <a :href="route('password.change')" class="nav-link">
-                <i class="nav-icon fas fa-key"></i>
-                 <p>Change Password</p>
-              </a>
+              <Link href="/users" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>Users</p>
+              </Link>
             </li>
-
-
-
+            <li class="nav-item">
+              <Link href="/categories" class="nav-link">
+                <i class="nav-icon fas fa-list"></i>
+                <p>Categories</p>
+              </Link>
+            </li>
+            <li class="nav-item">
+              <Link :href="route('password.change')" class="nav-link">
+                <i class="nav-icon fas fa-key"></i>
+                <p>Change Password</p>
+              </Link>
+            </li>
+            <li class="nav-item">
+              <Link :href="route('report.index')" class="nav-link">
+                <i class="nav-icon fas fa-file-alt"></i>
+                <p>Reports</p>
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
@@ -98,7 +105,10 @@ function logout() {
 
     <!-- Footer -->
     <footer class="main-footer">
-      <strong>&copy; {{ new Date().getFullYear() }} <a href="https://adminlte.io">GBV</a>.</strong> All rights reserved.
+      <strong>&copy; {{ new Date().getFullYear() }}
+        <a href="https://adminlte.io">GBV</a>.
+      </strong>
+      All rights reserved.
       <div class="float-right d-none d-sm-inline-block">
         <b>Version</b> 1.0
       </div>

@@ -6,6 +6,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Settings\PasswordController;
+use App\Http\Controllers\AnonymousReportController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +30,17 @@ Route::get('/login', function () {
 | Logout Route
 |--------------------------------------------------------------------------
 */
+Route::resource('categories', CategoryController::class);
+
+
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
+
+Route::get('/anonymous-reports/create', [AnonymousReportController::class, 'create'])->name('report.create');
+Route::post('/anonymous-reports', [AnonymousReportController::class, 'store'])->name('report.store');
+Route::get('/anonymous-reports/index', [AnonymousReportController::class, 'index'])->name('report.index');
+Route::get('/anonymous-reports/{reprt_id}', [AnonymousReportController::class, 'show'])->name('report.show');
 
 /*
 |--------------------------------------------------------------------------

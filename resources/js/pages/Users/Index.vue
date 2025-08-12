@@ -13,7 +13,11 @@ function resetPassword(id) {
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: 'Yes, Reset',
-    cancelButtonText: 'Cancel'
+    cancelButtonText: 'Cancel',
+    customClass: {
+      popup: 'swal2-small-popup'
+    },
+    allowOutsideClick: false
   }).then((result) => {
     if (result.isConfirmed) {
       router.post(route('users.reset-password', id), {}, {
@@ -35,7 +39,11 @@ function toggleStatus(id, status) {
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: status ? 'Yes, Disable' : 'Yes, Enable',
-    cancelButtonText: 'Cancel'
+    cancelButtonText: 'Cancel',
+    customClass: {
+      popup: 'swal2-small-popup'
+    },
+    allowOutsideClick: false
   }).then((result) => {
     if (result.isConfirmed) {
       router.post(route('users.toggle-status', id), {}, {
@@ -52,13 +60,12 @@ function toggleStatus(id, status) {
   <Head title="Manage Users" />
 
   <AdminLayout>
-    <!-- Page Header -->
     <div class="row mb-2">
       <div class="col-sm-6">
         <h1 class="m-0">Users</h1>
       </div>
       <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
+        <ol class="breadcrumb float-sm-right bg-transparent p-0 m-0">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
           <li class="breadcrumb-item active">Users</li>
         </ol>
@@ -66,14 +73,12 @@ function toggleStatus(id, status) {
     </div>
 
     <div class="container-fluid mt-4">
-      <!-- Add User Button -->
       <div class="d-flex justify-content-between align-items-center mb-3">
         <Link href="/users/create" class="btn btn-primary">
           <i class="fas fa-user-plus"></i> Add User
         </Link>
       </div>
 
-      <!-- Users Table -->
       <div class="table-responsive">
         <table class="table table-bordered table-striped">
           <thead>
@@ -100,26 +105,25 @@ function toggleStatus(id, status) {
               </td>
               <td>{{ new Date(user.created_at).toLocaleDateString() }}</td>
               <td>
-  <div class="d-flex gap-2">
-    <button
-      class="btn btn-warning btn-sm d-flex align-items-center"
-      @click="resetPassword(user.id)"
-      title="Reset Password"
-    >
-      <i class="fas fa-key me-1"></i> Reset
-    </button>
+                <div class="d-flex gap-2">
+                  <button
+                    class="btn btn-warning btn-sm d-flex align-items-center"
+                    @click="resetPassword(user.id)"
+                    title="Reset Password"
+                  >
+                    <i class="fas fa-key me-1"></i> Reset
+                  </button>
 
-    <button
-      :class="user.status ? 'btn btn-danger btn-sm d-flex align-items-center' : 'btn btn-success btn-sm d-flex align-items-center'"
-      @click="toggleStatus(user.id, user.status)"
-      :title="user.status ? 'Disable User' : 'Enable User'"
-    >
-      <i :class="user.status ? 'fas fa-user-slash me-1' : 'fas fa-user-check me-1'"></i>
-      {{ user.status ? 'Disable' : 'Enable' }}
-    </button>
-  </div>
-</td>
-
+                  <button
+                    :class="user.status ? 'btn btn-danger btn-sm d-flex align-items-center' : 'btn btn-success btn-sm d-flex align-items-center'"
+                    @click="toggleStatus(user.id, user.status)"
+                    :title="user.status ? 'Disable User' : 'Enable User'"
+                  >
+                    <i :class="user.status ? 'fas fa-user-slash me-1' : 'fas fa-user-check me-1'"></i>
+                    {{ user.status ? 'Disable' : 'Enable' }}
+                  </button>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -127,3 +131,9 @@ function toggleStatus(id, status) {
     </div>
   </AdminLayout>
 </template>
+
+<style>
+.swal2-small-popup {
+  width: 400px;
+}
+</style>

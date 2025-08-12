@@ -21,7 +21,7 @@ defineProps({
             <h1 class="m-0">Roles</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
+            <ol class="breadcrumb float-sm-right bg-transparent p-0 m-0">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Roles</li>
             </ol>
